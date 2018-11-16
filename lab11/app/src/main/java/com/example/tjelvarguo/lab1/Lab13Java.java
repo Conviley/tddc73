@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.ImageView;
@@ -24,12 +26,15 @@ public class Lab13Java extends Activity {
 
         TextView q1 = new TextView(this);
         q1.setText("Hur trvis du på LiU");
+        q1.setGravity(Gravity.CENTER);
 
         TextView q2 = new TextView(this);
         q2.setText("Läser du på LiTH");
+        q2.setGravity(Gravity.CENTER);
 
         TextView q3 = new TextView(this);
         q3.setText("Är detta LiUs logotyp");
+        q3.setGravity(Gravity.CENTER);
 
         String[] q1Answers = new String[]{"Bra", "Mycket Bra", "Jättebra"};
         String[] yesNo = new String[]{"Ja", "Nej"};
@@ -41,6 +46,13 @@ public class Lab13Java extends Activity {
         ImageView liuLogo = new ImageView(this);
         liuLogo.setImageDrawable(getDrawable(R.drawable.logo));
 
+        Button sendButton = new Button(this);
+        sendButton.setText("SKICKA IN");
+
+        LinearLayout.LayoutParams sendButtonParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
         outerContainer.addView(q1);
         outerContainer.addView(q1CheckBoxLayout);
         outerContainer.addView(q2);
@@ -48,6 +60,7 @@ public class Lab13Java extends Activity {
         outerContainer.addView(liuLogo);
         outerContainer.addView(q3);
         outerContainer.addView(q3CheckBoxLayout);
+        outerContainer.addView(sendButton, sendButtonParams);
 
         setContentView(outerContainer);
     }
