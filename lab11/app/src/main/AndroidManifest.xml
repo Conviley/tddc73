@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".Lab11Java" />
         <activity android:name=".Lab12XML" />
-        <activity android:name=".Lab12Java"></activity>
+        <activity android:name=".Lab12Java" />
+        <activity android:name=".Lab13XML"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,10 @@
 package com.example.tjelvarguo.lab1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +39,19 @@ public class Lab12Java extends Activity {
         relativeLayout.addView(emailLayout, emailParams);
         relativeLayout.addView(ageLayout, ageParams);
 
+        Button lab13Button = new Button(this);
+        lab13Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getApplicationContext(), Lab13XML.class);
+                startActivity(myIntent);
+            }
+        });
+
+        RelativeLayout.LayoutParams buttonParams = createParams(RelativeLayout.ALIGN_PARENT_BOTTOM ,0);
+
+        relativeLayout.addView(lab13Button, buttonParams);
+
         setContentView(relativeLayout);
     }
 
@@ -45,11 +60,11 @@ public class Lab12Java extends Activity {
         textView.setText(text);
 
         LinearLayout.LayoutParams textViewParam = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f
+                0, LinearLayout.LayoutParams.WRAP_CONTENT,1f
         );
         layout.addView(textView, textViewParam);
         LinearLayout.LayoutParams contentParam = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,4f);
+                0, LinearLayout.LayoutParams.WRAP_CONTENT,4f);
 
         if (hasEditText) {
             EditText editText = new EditText(this);
