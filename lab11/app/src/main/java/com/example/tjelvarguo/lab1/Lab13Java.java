@@ -20,6 +20,7 @@ public class Lab13Java extends Activity {
         super.onCreate(savedInstanceState);
 
         LinearLayout outerContainer = new LinearLayout(this);
+        outerContainer.setOrientation(LinearLayout.VERTICAL);
 
         TextView q1 = new TextView(this);
         q1.setText("Hur trvis du på LiU");
