@@ -16,12 +16,9 @@ public class Lab11Java extends Activity {
         super.onCreate(savedInstanceState);
 
         Button myButton = new Button(this);
-        myButton.setText("KNAPP");
+        myButton.setText("LAB 1.2XML");
 
-        Button lab12 = new Button(this);
-        lab12.setText("LAB 1.2");
-
-        lab12.setOnClickListener(new View.OnClickListener() {
+        myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(getApplicationContext(), Lab12XML.class);
@@ -38,7 +35,6 @@ public class Lab11Java extends Activity {
         myEditText.setId(View.generateViewId());
         ratingBar.setId(View.generateViewId());
         multilineEditText.setId(View.generateViewId());
-        lab12.setId(View.generateViewId());
 
         RelativeLayout myLayout = new RelativeLayout(this);
 
@@ -71,18 +67,11 @@ public class Lab11Java extends Activity {
 
         multilinEditTextParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
-        RelativeLayout.LayoutParams lab12Param =
-                new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.MATCH_PARENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        lab12Param.addRule(RelativeLayout.BELOW, ratingBar.getId());
-
         myLayout.addView(myButton, buttonParams);
         myLayout.addView(myEditText, textParams);
         myLayout.addView(ratingBar, ratinBarParams);
         myLayout.addView(multilineEditText, multilinEditTextParams);
-        myLayout.addView(lab12, lab12Param);
+
         setContentView(myLayout);
     }
 }
