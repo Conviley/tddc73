@@ -16,7 +16,6 @@ public class Lab13XML extends Activity {
 
         Button button = findViewById(R.id.lab13);
 
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
