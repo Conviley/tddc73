@@ -16,7 +16,7 @@ public class Lab11Java extends Activity {
         super.onCreate(savedInstanceState);
 
         Button myButton = new Button(this);
-        myButton.setText("LAB 1.2XML");
+        myButton.setText("LAB 1.2 XML");
 
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override

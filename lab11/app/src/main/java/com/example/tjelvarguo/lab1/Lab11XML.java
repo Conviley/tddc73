@@ -13,7 +13,7 @@ public class Lab11XML extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lab11);
 
-        Button change_activity = (Button) findViewById(R.id.knapp);
+        Button change_activity = findViewById(R.id.knapp);
 
         change_activity.setOnClickListener(new View.OnClickListener() {
             @Override

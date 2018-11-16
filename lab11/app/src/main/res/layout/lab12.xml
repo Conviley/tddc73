@@ -96,6 +96,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ageLayout"
-        android:text="Lab 12 JAVA"/>
+        android:text="LAB 1.2 JAVA"/>
 
 </RelativeLayout>

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/knapp"
-        android:text="LAB11JAVA"/>
+        android:text="LAB 1.1 JAVA"/>
 
     <EditText
         android:id="@+id/editText"
