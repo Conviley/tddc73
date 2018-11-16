@@ -28,9 +28,9 @@ public class Lab12Java extends Activity {
         RelativeLayout.LayoutParams ageParams = createParams(RelativeLayout.BELOW, emailLayout.getId());
 
         addViewsToLinearLayout(nameLayout, "Namn", true);
-        addViewsToLinearLayout(nameLayout, "Lösenord",true);
-        addViewsToLinearLayout(nameLayout, "Epost",true);
-        addViewsToLinearLayout(nameLayout, "Ålder",false);
+        addViewsToLinearLayout(passwordLayout, "Lösenord",true);
+        addViewsToLinearLayout(emailLayout, "Epost",true);
+        addViewsToLinearLayout(ageLayout, "Ålder",false);
 
         relativeLayout.addView(nameLayout, nameParams);
         relativeLayout.addView(passwordLayout, passwordParams);
@@ -45,16 +45,14 @@ public class Lab12Java extends Activity {
         textView.setText(text);
 
         LinearLayout.LayoutParams textViewParam = new LinearLayout.LayoutParams(
-                0,LinearLayout.LayoutParams.WRAP_CONTENT,1
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1f
         );
-        layout.addView(textView);
-
+        layout.addView(textView, textViewParam);
         LinearLayout.LayoutParams contentParam = new LinearLayout.LayoutParams(
-                0,LinearLayout.LayoutParams.WRAP_CONTENT,4);
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,4f);
 
         if (hasEditText) {
             EditText editText = new EditText(this);
-
             layout.addView(editText,contentParam);
         } else {
             SeekBar seekBar = new SeekBar(this);
