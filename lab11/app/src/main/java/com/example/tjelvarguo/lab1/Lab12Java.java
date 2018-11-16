@@ -40,6 +40,7 @@ public class Lab12Java extends Activity {
         relativeLayout.addView(ageLayout, ageParams);
 
         Button lab13Button = new Button(this);
+        lab13Button.setText("LAB 13 XML");
         lab13Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
