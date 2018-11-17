@@ -1,4 +1,4 @@
-package com.example.tjelvarguo.lab1;
+package com.example.tjelvarguo.lab1.lab1;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,21 +6,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Lab11XML extends Activity {
+import com.example.tjelvarguo.lab1.R;
+
+public class Lab12XML extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lab11);
+        setContentView(R.layout.lab12);
 
-        Button change_activity = findViewById(R.id.knapp);
+        Button button = findViewById(R.id.java12);
 
-        change_activity.setOnClickListener(new View.OnClickListener() {
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getApplicationContext(), Lab11Java.class);
+                Intent myIntent = new Intent(getApplicationContext(), Lab12Java.class);
                 startActivity(myIntent);
             }
         });
+
     }
+
 }

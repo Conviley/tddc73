@@ -9,18 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Lab11XML">
+        <activity android:name=".lab1.Lab11XML">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Lab11Java" />
-        <activity android:name=".Lab12XML" />
-        <activity android:name=".Lab12Java" />
-        <activity android:name=".Lab13XML" />
-        <activity android:name=".Lab13Java"></activity>
+        <activity android:name=".lab1.Lab11Java" />
+        <activity android:name=".lab1.Lab12XML" />
+        <activity android:name=".lab1.Lab12Java" />
+        <activity android:name=".lab1.Lab13XML" />
+        <activity android:name=".lab1.Lab13Java" />
+        <activity android:name=".lab2.Lab2"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.tjelvarguo.lab1;
+package com.example.tjelvarguo.lab1.lab1;
 
 import android.app.Activity;
 import android.content.Intent;
