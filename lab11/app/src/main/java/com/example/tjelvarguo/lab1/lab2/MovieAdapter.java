@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tjelvarguo.lab1.R;
@@ -21,11 +23,14 @@ public class MovieAdapter extends BaseExpandableListAdapter{
     private Context ctx;
     private HashMap<String, List<String>> movieCollection;
     private List<String> genres;
+    private EditText pathDisplay;
 
-    public MovieAdapter(Context ctx, HashMap<String, List<String>> movieCollection, List<String> genres) {
+    public MovieAdapter(Context ctx, HashMap<String, List<String>> movieCollection,
+                        List<String> genres, EditText pathDisplay) {
         this.ctx = ctx;
         this.movieCollection = movieCollection;
         this.genres = genres;
+        this.pathDisplay = pathDisplay;
     }
 
     @Override
@@ -64,31 +69,37 @@ public class MovieAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getGroupView(int parent, boolean isExpanded, View convertView, ViewGroup parentView) {
+    public View getGroupView(int parent, boolean isExpanded, View childView, ViewGroup parentView) {
         String groupTitle = (String) getGroup(parent);
-        if (convertView == null) {
+        if (childView == null) {
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.exp_list_parent_view, parentView, false);
+            childView = inflater.inflate(R.layout.exp_list_parent_view, parentView, false);
         }
 
-        TextView parentText = convertView.findViewById(R.id.parent_text);
+        TextView parentText = childView.findViewById(R.id.parent_text);
         parentText.setText(groupTitle);
 
-        return convertView;
+        return childView;
     }
 
     @Override
-    public View getChildView(int parent, int child, boolean lastChild, View convertVIew, ViewGroup parentView) {
+    public View getChildView(final int parent, final int child, boolean lastChild, View childView, final ViewGroup parentView) {
         String childTitle = (String) getChild(parent, child);
-        if (convertVIew == null) {
+        if (childView == null) {
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertVIew = inflater.inflate(R.layout.exp_list_child_view, parentView, false);
+            childView = inflater.inflate(R.layout.exp_list_child_view, parentView, false);
         }
-
-        TextView childText =  convertVIew.findViewById(R.id.child_text);
+        LinearLayout container = childView.findViewById(R.id.child_container);
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pathDisplay.setText("/" + getGroup(parent) + "/" + getChild(parent, child));
+            }
+        });
+        TextView childText =  childView.findViewById(R.id.child_text);
         childText.setText(childTitle);
 
-        return convertVIew;
+        return childView;
     }
 
     @Override
