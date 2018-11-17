@@ -16,10 +16,10 @@ public class DataProvider {
         addItemsToList(actionMovies, new String[]{"Die Hard", "The Predator", "Robocop"});
 
         List<String> romanticMovies = new ArrayList<>();
-        addItemsToList(actionMovies, new String[]{"Love Actually", "Notting hill"});
+        addItemsToList(romanticMovies, new String[]{"Love Actually", "Notting hill"});
 
         List<String> horrorMovies = new ArrayList<>();
-        addItemsToList(actionMovies, new String[]{"Get Out", "The Conjuring", "Excorsist", });
+        addItemsToList(horrorMovies, new String[]{"Get Out", "The Conjuring", "Excorsist", });
 
         movieDetails.put("Action Movies", actionMovies);
         movieDetails.put("Romantic Movies", romanticMovies);
