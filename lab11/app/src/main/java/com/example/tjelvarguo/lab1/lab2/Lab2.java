@@ -122,22 +122,18 @@ public class Lab2 extends Activity {
                 }
             } else {
                 // MARK MOVIE
-                int parentid = 0;
-                int childid = 0;
                 for (int i = 0; i < genres.size(); i++) {
                     if (genres.get(i).equals(genre)) {
-                        parentid = i;
                         List<String> movies = movieCollection.get(genres.get(i));
                         for (int j = 0; j < movies.size(); j++) {
                             if (movies.get(j).equals(movie)) {
-                                childid = j;
+                                int childIndex = expList.getFlatListPosition(ExpandableListView.getPackedPositionForChild(i, j));
+                                expList.setItemChecked(childIndex, true);
                             }
                         }
                     }
                 }
-                int childIndex = expList.getFlatListPosition(ExpandableListView.getPackedPositionForChild(parentid, childid));
-                Log.d("dee", "asd" + childIndex);
-                expList.setItemChecked(childIndex, true);
+
             }
 
         } else if (matchStatus == MatchStatus.NO_MATCH) {
