@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 
@@ -22,17 +21,27 @@ public class Lab2 extends Activity {
     EditText searchBar;
     MovieAdapter adapter;
 
+    public enum MatchStatus {
+        NO_MATCH, COMPLETE_MATCH, PARTIAL_MATCH
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab2);
+
         searchBar = findViewById(R.id.searchBar);
         searchBar.setText("/");
         searchBar.setSelection(searchBar.getText().length());
+
         expList = findViewById(R.id.movieList);
+
         movieCollection = DataProvider.getInfo();
+
         genres = new ArrayList<>(movieCollection.keySet());
+
         adapter = new MovieAdapter(this, movieCollection, genres, searchBar);
+
         expList.setAdapter(adapter);
 
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -43,7 +52,29 @@ public class Lab2 extends Activity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String genre = "";
+                String movie = "";
 
+                boolean onGenre = true;
+
+                MatchStatus matchStatus = MatchStatus.PARTIAL_MATCH;
+
+                if (charSequence.charAt(0) != '/') {
+                    searchBar.setError("Ogiltig Sökväg");
+                } else {
+                    for (int j = 1; j < charSequence.length(); j++) {
+                        if (charSequence.charAt(j) == '/') {
+                            onGenre = false;
+                        } else if (onGenre) {
+                            genre += charSequence.charAt(j);
+                            matchStatus = lookForMatch(genres, genre);
+                        } else {
+                            movie += charSequence.charAt(j);
+                            matchStatus = lookForMatch(movieCollection.get(genre), movie);
+                        }
+                        respondToMatchStatus(matchStatus, searchBar, onGenre, genre, movie);
+                    }
+                }
             }
 
             @Override
@@ -55,5 +86,38 @@ public class Lab2 extends Activity {
         });
     }
 
+    private MatchStatus lookForMatch(List<String> existingData, String input) {
+        MatchStatus matchStatus = MatchStatus.NO_MATCH;
+        for (int i = 0; i < existingData.size(); i++) {
+            String data = existingData.get(i);
+            if (!data.startsWith(input)) {
+                matchStatus = MatchStatus.NO_MATCH;
+            } else if (data.equals(input)) {
+                matchStatus = MatchStatus.COMPLETE_MATCH;
+                return matchStatus;
+            } else {
+                matchStatus = MatchStatus.PARTIAL_MATCH;
+            }
+        }
+        return matchStatus;
+    }
 
+    private void respondToMatchStatus(MatchStatus matchStatus, EditText searchBar, boolean onGenre,
+                                      String genre, String movie) {
+        if ( matchStatus == MatchStatus.COMPLETE_MATCH) {
+            if (onGenre) {
+                // EXPAND GENRE
+                for (int i = 0; i < genres.size(); i++) {
+                    if (genres.get(i).equals(genre)) {
+                        expList.expandGroup(i);
+                    }
+                }
+            } else {
+                // MARK MOVIE
+            }
+
+        } else if (matchStatus == MatchStatus.NO_MATCH) {
+            searchBar.setError("Ogiltig Sökväg");
+        }
+    }
 }
