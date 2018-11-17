@@ -21,9 +21,9 @@ public class DataProvider {
         List<String> horrorMovies = new ArrayList<>();
         addItemsToList(horrorMovies, new String[]{"Get Out", "The Conjuring", "Excorsist", });
 
-        movieDetails.put("Action Movies", actionMovies);
-        movieDetails.put("Romantic Movies", romanticMovies);
-        movieDetails.put("Horror Movies", horrorMovies);
+        movieDetails.put("Action", actionMovies);
+        movieDetails.put("Romantic", romanticMovies);
+        movieDetails.put("Horror", horrorMovies);
 
         return movieDetails;
     }

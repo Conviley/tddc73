@@ -1,11 +1,17 @@
 package com.example.tjelvarguo.lab1.lab2;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 
 import com.example.tjelvarguo.lab1.R;
 
@@ -52,6 +58,9 @@ public class Lab2 extends Activity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0) {
+                    return;
+                }
                 String genre = "";
                 String movie = "";
 
@@ -90,12 +99,10 @@ public class Lab2 extends Activity {
         MatchStatus matchStatus = MatchStatus.NO_MATCH;
         for (int i = 0; i < existingData.size(); i++) {
             String data = existingData.get(i);
-            if (!data.startsWith(input)) {
-                matchStatus = MatchStatus.NO_MATCH;
-            } else if (data.equals(input)) {
+            if (data.equals(input)) {
                 matchStatus = MatchStatus.COMPLETE_MATCH;
                 return matchStatus;
-            } else {
+            } else if (data.startsWith(input)){
                 matchStatus = MatchStatus.PARTIAL_MATCH;
             }
         }
@@ -104,6 +111,7 @@ public class Lab2 extends Activity {
 
     private void respondToMatchStatus(MatchStatus matchStatus, EditText searchBar, boolean onGenre,
                                       String genre, String movie) {
+        searchBar.setError(null);
         if ( matchStatus == MatchStatus.COMPLETE_MATCH) {
             if (onGenre) {
                 // EXPAND GENRE
@@ -114,6 +122,22 @@ public class Lab2 extends Activity {
                 }
             } else {
                 // MARK MOVIE
+                int parentid = 0;
+                int childid = 0;
+                for (int i = 0; i < genres.size(); i++) {
+                    if (genres.get(i).equals(genre)) {
+                        parentid = i;
+                        List<String> movies = movieCollection.get(genres.get(i));
+                        for (int j = 0; j < movies.size(); j++) {
+                            if (movies.get(j).equals(movie)) {
+                                childid = j;
+                            }
+                        }
+                    }
+                }
+                int childIndex = expList.getFlatListPosition(ExpandableListView.getPackedPositionForChild(parentid, childid));
+                Log.d("dee", "asd" + childIndex);
+                expList.setItemChecked(childIndex, true);
             }
 
         } else if (matchStatus == MatchStatus.NO_MATCH) {
