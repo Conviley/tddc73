@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".lab1.Lab11XML">
+        <activity android:name=".lab2.Lab2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,7 @@
         <activity android:name=".lab1.Lab12Java" />
         <activity android:name=".lab1.Lab13XML" />
         <activity android:name=".lab1.Lab13Java" />
-        <activity android:name=".lab2.Lab2"></activity>
+       
     </application>
 
 </manifest>

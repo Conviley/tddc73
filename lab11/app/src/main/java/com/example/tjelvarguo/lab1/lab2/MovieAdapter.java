@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
+
+import com.example.tjelvarguo.lab1.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,17 +31,17 @@ public class MovieAdapter extends BaseExpandableListAdapter{
 
     @Override
     public int getGroupCount() {
-        return 0;
+        return movieList.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return 0;
+        return movieCategories.get(movieList.get(i)).size();
     }
 
     @Override
     public Object getGroup(int i) {
-        return null;
+        return movieList.get(i);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class MovieAdapter extends BaseExpandableListAdapter{
 
     @Override
     public long getGroupId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -62,8 +65,17 @@ public class MovieAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        return null;
+    public View getGroupView(int parent, boolean isExpanded, View convertView, ViewGroup parentView) {
+        String groupTitle = (String) getGroup(parent);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.exp_list_parent_view, parentView, false);
+        }
+
+        TextView parentText = convertView.findViewById(R.id.parent_text);
+        parentText.setText(groupTitle);
+
+        return convertView;
     }
 
     @Override
@@ -71,8 +83,13 @@ public class MovieAdapter extends BaseExpandableListAdapter{
         String childTitle = (String) getChild(parent, child);
         if (convertVIew == null) {
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertVIew = inflater.inflate(R.layout.exp_list_child_view, parentView, false);
         }
-        return null;
+
+        TextView childText =  convertVIew.findViewById(R.id.child_text);
+        childText.setText(childTitle);
+
+        return convertVIew;
     }
 
     @Override
