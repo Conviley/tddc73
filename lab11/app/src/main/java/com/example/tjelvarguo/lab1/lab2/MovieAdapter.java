@@ -94,6 +94,7 @@ public class MovieAdapter extends BaseExpandableListAdapter{
             @Override
             public void onClick(View view) {
                 pathDisplay.setText("/" + getGroup(parent) + "/" + getChild(parent, child));
+                pathDisplay.setSelection(pathDisplay.getText().length());
             }
         });
         TextView childText =  childView.findViewById(R.id.child_text);

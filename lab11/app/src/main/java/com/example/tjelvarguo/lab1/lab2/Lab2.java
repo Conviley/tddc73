@@ -28,6 +28,7 @@ public class Lab2 extends Activity {
         setContentView(R.layout.activity_lab2);
         searchBar = findViewById(R.id.searchBar);
         searchBar.setText("/");
+        searchBar.setSelection(searchBar.getText().length());
         expList = findViewById(R.id.movieList);
         movieCollection = DataProvider.getInfo();
         genres = new ArrayList<>(movieCollection.keySet());
