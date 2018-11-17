@@ -2,6 +2,7 @@ package com.example.tjelvarguo.lab1.lab2;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ExpandableListView;
 
 import com.example.tjelvarguo.lab1.R;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class Lab2 extends Activity {
 
-    HashMap<String, List<String>> movieCategories;
-    List<String> movieList;
+    HashMap<String, List<String>> movieCollection;
+    List<String> genres;
     ExpandableListView expList;
     MovieAdapter adapter;
 
@@ -23,9 +24,11 @@ public class Lab2 extends Activity {
         setContentView(R.layout.activity_lab2);
 
         expList = findViewById(R.id.movieList);
-        movieCategories = DataProvider.getInfo();
-        movieList = new ArrayList<>(movieCategories.keySet());
-        adapter = new MovieAdapter(this, movieCategories, movieList);
+        movieCollection = DataProvider.getInfo();
+        genres = new ArrayList<>(movieCollection.keySet());
+        adapter = new MovieAdapter(this, movieCollection, genres);
         expList.setAdapter(adapter);
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.example.tjelvarguo.lab1.lab2;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,33 +19,33 @@ import java.util.List;
 public class MovieAdapter extends BaseExpandableListAdapter{
 
     private Context ctx;
-    private HashMap<String, List<String>> movieCategories;
-    private List<String> movieList;
+    private HashMap<String, List<String>> movieCollection;
+    private List<String> genres;
 
-    public MovieAdapter(Context ctx, HashMap<String, List<String>> movieCategories, List<String> movieList) {
+    public MovieAdapter(Context ctx, HashMap<String, List<String>> movieCollection, List<String> genres) {
         this.ctx = ctx;
-        this.movieCategories = movieCategories;
-        this.movieList = movieList;
+        this.movieCollection = movieCollection;
+        this.genres = genres;
     }
 
     @Override
     public int getGroupCount() {
-        return movieList.size();
+        return genres.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return movieCategories.get(movieList.get(i)).size();
+        return movieCollection.get(genres.get(i)).size();
     }
 
     @Override
     public Object getGroup(int i) {
-        return movieList.get(i);
+        return genres.get(i);
     }
 
     @Override
     public Object getChild(int parent, int child) {
-        return movieCategories.get(movieList.get(parent)).get(child);
+        return movieCollection.get(genres.get(parent)).get(child);
     }
 
     @Override
@@ -94,6 +93,6 @@ public class MovieAdapter extends BaseExpandableListAdapter{
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return false;
+        return true;
     }
 }
