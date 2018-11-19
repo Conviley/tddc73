@@ -9,10 +9,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.tjelvarguo.lab1.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tjelvar Guo on 2018-11-19.
@@ -30,13 +34,13 @@ public class PopUpList extends View {
 
     float textHeight;
 
+    List<String> names;
+
     Rect listBackgroundRect;
 
     public PopUpList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.editText = editText;
-
-
+        names = new ArrayList<>();
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
@@ -50,27 +54,23 @@ public class PopUpList extends View {
         }
 
         initPaints();
-
-
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+        for (int i = 0; i < names.size(); i++) {
+            canvas.drawText(names.get(i), 10f,15f, textPaint);
 
-        // Draw the shadow
-        Rect listBackground = new Rect(0,0, canvas.getWidth(), canvas.getHeight());
-        canvas.drawRect(listBackground, shadowPaint);
+            Log.d("dee", "onDraw: asdasdasd");
+        }
+        Log.d("dee", "onDraw: asdasdasd");
+        super.onDraw(canvas);
     }
 
     private void initPaints(){
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setTextAlign(Paint.Align.RIGHT);
         textPaint.setColor(Color.BLACK);
         if (textHeight == 0) {
             textHeight = textPaint.getTextSize();
@@ -78,12 +78,12 @@ public class PopUpList extends View {
             textPaint.setTextSize(textHeight);
         }
 
-        backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        backgroundPaint = new Paint(Paint.UNDERLINE_TEXT_FLAG);
         backgroundPaint.setStyle(Paint.Style.FILL);
         backgroundPaint.setTextSize(textHeight);
 
         shadowPaint = new Paint(0);
-        shadowPaint.setColor(0xff101010);
+        shadowPaint.setColor(Color.RED);
         shadowPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
     }
 
@@ -93,6 +93,12 @@ public class PopUpList extends View {
 
     public void setAlternatingRows(boolean alternateRows) {
         this.alternateRows = alternateRows;
+        invalidate();
+        requestLayout();
+    }
+
+    public void setNames(List<String> names){
+        this.names = names;
         invalidate();
         requestLayout();
     }
