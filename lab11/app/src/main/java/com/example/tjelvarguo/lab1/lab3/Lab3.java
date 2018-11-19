@@ -31,7 +31,7 @@ public class Lab3 extends Activity {
         ArrayList<String> names = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            names.add("hje" + i);
+            names.add("hejgkjhgjkhgjkhgjhk" + i);
         }
 
         popUpList.setNames(names);

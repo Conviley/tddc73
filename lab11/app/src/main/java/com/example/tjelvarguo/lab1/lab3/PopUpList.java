@@ -60,7 +60,7 @@ public class PopUpList extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         for (int i = 0; i < names.size(); i++) {
-            canvas.drawText(names.get(i), 10f,15f, textPaint);
+            canvas.drawText(names.get(i), 0,100*i + 50, textPaint);
 
             Log.d("dee", "onDraw: asdasdasd");
         }
@@ -70,8 +70,9 @@ public class PopUpList extends View {
 
     private void initPaints(){
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setTextAlign(Paint.Align.RIGHT);
+        textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(50f);
         if (textHeight == 0) {
             textHeight = textPaint.getTextSize();
         } else {
