@@ -1,17 +1,12 @@
 package com.example.tjelvarguo.lab1.lab2;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 
 import com.example.tjelvarguo.lab1.R;
 
@@ -26,6 +21,11 @@ public class Lab2 extends Activity {
     ExpandableListView expList;
     EditText searchBar;
     MovieAdapter adapter;
+
+    int selectedGenreIndex;
+    int selectedMovieIndex;
+
+    boolean onGenre;
 
     public enum MatchStatus {
         NO_MATCH, COMPLETE_MATCH, PARTIAL_MATCH
@@ -59,19 +59,20 @@ public class Lab2 extends Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) {
+                    searchBar.setText("/");
+                    searchBar.setSelection(searchBar.getText().length());
                     return;
                 }
                 String genre = "";
                 String movie = "";
 
-                boolean onGenre = true;
-
-                MatchStatus matchStatus = MatchStatus.PARTIAL_MATCH;
+                onGenre = true;
 
                 if (charSequence.charAt(0) != '/') {
                     searchBar.setError("Ogiltig Sökväg");
                 } else {
                     for (int j = 1; j < charSequence.length(); j++) {
+                        MatchStatus matchStatus = MatchStatus.PARTIAL_MATCH;
                         if (charSequence.charAt(j) == '/') {
                             onGenre = false;
                         } else if (onGenre) {
@@ -89,7 +90,7 @@ public class Lab2 extends Activity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.equals("")) {
-                    searchBar.setText("/");
+
                 }
             }
         });
@@ -101,11 +102,17 @@ public class Lab2 extends Activity {
             String data = existingData.get(i);
             if (data.equals(input)) {
                 matchStatus = MatchStatus.COMPLETE_MATCH;
+                if (onGenre) {
+                    selectedGenreIndex = i;
+                } else {
+                    selectedMovieIndex = i;
+                }
                 return matchStatus;
             } else if (data.startsWith(input)){
                 matchStatus = MatchStatus.PARTIAL_MATCH;
             }
         }
+
         return matchStatus;
     }
 
@@ -114,26 +121,11 @@ public class Lab2 extends Activity {
         searchBar.setError(null);
         if ( matchStatus == MatchStatus.COMPLETE_MATCH) {
             if (onGenre) {
-                // EXPAND GENRE
-                for (int i = 0; i < genres.size(); i++) {
-                    if (genres.get(i).equals(genre)) {
-                        expList.expandGroup(i);
-                    }
-                }
+                expList.expandGroup(selectedGenreIndex);
             } else {
-                // MARK MOVIE
-                for (int i = 0; i < genres.size(); i++) {
-                    if (genres.get(i).equals(genre)) {
-                        List<String> movies = movieCollection.get(genres.get(i));
-                        for (int j = 0; j < movies.size(); j++) {
-                            if (movies.get(j).equals(movie)) {
-                                int childIndex = expList.getFlatListPosition(ExpandableListView.getPackedPositionForChild(i, j));
-                                expList.setItemChecked(childIndex, true);
-                            }
-                        }
-                    }
-                }
-
+                int childIndex = expList.getFlatListPosition(ExpandableListView.
+                        getPackedPositionForChild(selectedGenreIndex, selectedMovieIndex));
+                expList.setItemChecked(childIndex, true);
             }
 
         } else if (matchStatus == MatchStatus.NO_MATCH) {
