@@ -89,9 +89,6 @@ public class Lab2 extends Activity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.equals("")) {
-
-                }
             }
         });
     }
