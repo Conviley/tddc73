@@ -25,8 +25,7 @@ import java.util.List;
 public class PopUpList extends View {
 
     boolean alternateRows;
-    EditText editText;
-
+    
     Paint backgroundPaint;
     Paint shadowPaint;
     Paint dividerPaint;
@@ -35,8 +34,6 @@ public class PopUpList extends View {
     float textHeight;
 
     List<String> names;
-
-    Rect listBackgroundRect;
 
     public PopUpList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -61,10 +58,7 @@ public class PopUpList extends View {
     protected void onDraw(Canvas canvas) {
         for (int i = 0; i < names.size(); i++) {
             canvas.drawText(names.get(i), 0,100*i + 50, textPaint);
-
-            Log.d("dee", "onDraw: asdasdasd");
         }
-        Log.d("dee", "onDraw: asdasdasd");
         super.onDraw(canvas);
     }
 
@@ -73,6 +67,7 @@ public class PopUpList extends View {
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(50f);
+
         if (textHeight == 0) {
             textHeight = textPaint.getTextSize();
         } else {
@@ -88,19 +83,26 @@ public class PopUpList extends View {
         shadowPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
     }
 
+    private void redDraw() {
+        invalidate();
+        requestLayout();
+    }
+
     public boolean getAlternatingRows(){
         return alternateRows;
     }
 
     public void setAlternatingRows(boolean alternateRows) {
         this.alternateRows = alternateRows;
-        invalidate();
-        requestLayout();
     }
 
     public void setNames(List<String> names){
         this.names = names;
-        invalidate();
-        requestLayout();
+        redDraw();
+    }
+
+    public void clearNames() {
+        this.names.clear();
+        redDraw();
     }
 }

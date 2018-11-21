@@ -7,10 +7,16 @@
     tools:context="com.example.tjelvarguo.lab1.lab3.Lab3">
 
 
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.example.tjelvarguo.lab1.lab3.PopUpList
         android:id="@+id/popuplist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/searchBar"
         custom:alternatingRowColors="true"/>
 
 </RelativeLayout>
