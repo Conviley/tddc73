@@ -27,18 +27,19 @@ public class Lab3 extends Activity {
 
     private PopUpList popUpList;
     private EditText searchBar;
+    private InteractiveSearcher interactiveSearcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lab3);
-        popUpList = findViewById(R.id.popuplist);
-        searchBar = findViewById(R.id.searchBar);
+        interactiveSearcher = findViewById(R.id.interactiveSearcher);
+        popUpList = interactiveSearcher.getPopUpList();
+        searchBar = interactiveSearcher.getSearchBar();
 
         final ArrayList<String> names = new ArrayList<>();
 
         final RequestQueue queue = Volley.newRequestQueue(this);
-
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override

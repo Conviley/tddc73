@@ -33,11 +33,15 @@ public class PopUpList extends View {
 
     float textHeight;
 
-    List<String> names;
+    List<String> names = new ArrayList<>();
+
+    public  PopUpList(Context context) {
+        super(context);
+        initPaints();
+    }
 
     public PopUpList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        names = new ArrayList<>();
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
