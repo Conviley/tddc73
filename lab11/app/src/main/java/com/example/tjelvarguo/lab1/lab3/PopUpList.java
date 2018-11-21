@@ -25,7 +25,7 @@ import java.util.List;
 public class PopUpList extends View {
 
     boolean alternateRows;
-    
+
     Paint backgroundPaint;
     Paint shadowPaint;
     Paint dividerPaint;
@@ -52,7 +52,6 @@ public class PopUpList extends View {
 
         initPaints();
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {

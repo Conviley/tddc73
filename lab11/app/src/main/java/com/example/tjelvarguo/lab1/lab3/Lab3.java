@@ -72,8 +72,7 @@ public class Lab3 extends Activity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                // TODO: Handle error
-
+                                Log.d("dee: ", error.toString());
                             }
                         });
 
