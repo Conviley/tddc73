@@ -3,6 +3,9 @@ package com.example.tjelvarguo.lab1.lab1;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,10 +32,10 @@ public class Lab12Java extends Activity {
         RelativeLayout.LayoutParams emailParams = createParams(RelativeLayout.BELOW, passwordLayout.getId());
         RelativeLayout.LayoutParams ageParams = createParams(RelativeLayout.BELOW, emailLayout.getId());
 
-        addViewsToLinearLayout(nameLayout, "Namn", true);
-        addViewsToLinearLayout(passwordLayout, "Lösenord",true);
-        addViewsToLinearLayout(emailLayout, "Epost",true);
-        addViewsToLinearLayout(ageLayout, "Ålder",false);
+        addViewsToLinearLayout(nameLayout, "Namn", true, null);
+        addViewsToLinearLayout(passwordLayout, "Lösenord",true, (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD));
+        addViewsToLinearLayout(emailLayout, "Epost",true, InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        addViewsToLinearLayout(ageLayout, "Ålder",false, null);
 
         relativeLayout.addView(nameLayout, nameParams);
         relativeLayout.addView(passwordLayout, passwordParams);
@@ -56,7 +59,7 @@ public class Lab12Java extends Activity {
         setContentView(relativeLayout);
     }
 
-    private void addViewsToLinearLayout (LinearLayout layout, String text, boolean hasEditText) {
+    private void addViewsToLinearLayout (LinearLayout layout, String text, boolean hasEditText, Integer inputType) {
         TextView textView = new TextView(this);
         textView.setText(text);
 
@@ -69,6 +72,10 @@ public class Lab12Java extends Activity {
 
         if (hasEditText) {
             EditText editText = new EditText(this);
+            if (inputType != null) {
+                Log.d("deee: ", "inputtype: " + inputType);
+                editText.setInputType(inputType);
+            }
             layout.addView(editText,contentParam);
         } else {
             SeekBar seekBar = new SeekBar(this);

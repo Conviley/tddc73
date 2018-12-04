@@ -24,11 +24,7 @@ import java.util.List;
 
 public class PopUpList extends View {
 
-    boolean alternateRows;
-
     Paint backgroundPaint;
-    Paint shadowPaint;
-    Paint dividerPaint;
     Paint textPaint;
 
     float textHeight;
@@ -47,12 +43,6 @@ public class PopUpList extends View {
                 attrs,
                 R.styleable.PopUpList,
                 0, 0);
-
-        try {
-            alternateRows = a.getBoolean(R.styleable.PopUpList_alternatingRowColors, false);
-        } finally {
-            a.recycle();
-        }
 
         initPaints();
     }
@@ -80,23 +70,11 @@ public class PopUpList extends View {
         backgroundPaint = new Paint(Paint.UNDERLINE_TEXT_FLAG);
         backgroundPaint.setStyle(Paint.Style.FILL);
         backgroundPaint.setTextSize(textHeight);
-
-        shadowPaint = new Paint(0);
-        shadowPaint.setColor(Color.RED);
-        shadowPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
     }
 
     private void redDraw() {
         invalidate();
         requestLayout();
-    }
-
-    public boolean getAlternatingRows(){
-        return alternateRows;
-    }
-
-    public void setAlternatingRows(boolean alternateRows) {
-        this.alternateRows = alternateRows;
     }
 
     public void setNames(List<String> names){
