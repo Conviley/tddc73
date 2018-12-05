@@ -55,24 +55,21 @@ public class PopUpList extends LinearLayout {
 
     private void fillView(){
         this.removeAllViews();
-        TextView textView = new TextView(ctx);
-        textView.setText("ASDASDASDASDASW");
-        this.addView(textView);
+
         for (int i = 0; i < names.size(); i++) {
             NameRow nameRow = new NameRow(ctx);
             nameRow.setName(names.get(i));
             this.addView(nameRow);
+            Log.d("dee", names.get(i));
         }
-        TextView textView1 = new TextView(ctx);
-        textView1.setText("ASDASDASDASDASW");
-        this.addView(textView1);
+
 
     }
 
-    @Override
+/*    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(840, names.size() * 100 );
-    }
+    }*/
 
 
     private void redDraw() {

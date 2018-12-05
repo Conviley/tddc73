@@ -46,7 +46,7 @@ public class InteractiveSearcher extends LinearLayout {
         scrollView.addView(popUpList);
 
         popupWindow = new PopupWindow(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupWindow.setContentView(scrollView);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 

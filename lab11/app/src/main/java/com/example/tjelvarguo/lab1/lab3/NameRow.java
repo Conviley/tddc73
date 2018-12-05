@@ -15,8 +15,7 @@ import android.view.View;
 public class NameRow extends View {
 
     private Paint textPaint;
-
-    private float textHeight;
+    private Paint linePaint;
     private String name;
 
     public NameRow(Context context) {
@@ -41,16 +40,14 @@ public class NameRow extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-        canvas.drawText(name, 0, 0, textPaint);
-
-
+        canvas.drawText(name, 0,  70, textPaint);
+        canvas.drawLine(0,100,840,100,linePaint);
         super.onDraw(canvas);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(100,  100 );
+        setMeasuredDimension(840,  100 );
     }
 
 
@@ -58,13 +55,11 @@ public class NameRow extends View {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(500f);
+        textPaint.setTextSize(50);
 
-        if (textHeight == 0) {
-            textHeight = textPaint.getTextSize();
-        } else {
-            textPaint.setTextSize(textHeight);
-        }
+        linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        linePaint.setTextAlign(Paint.Align.LEFT);
+        linePaint.setColor(Color.BLACK);
 
     }
 
