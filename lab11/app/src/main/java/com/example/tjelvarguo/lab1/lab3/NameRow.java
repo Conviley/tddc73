@@ -52,7 +52,7 @@ public class NameRow extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(width + 40,  100 );
+        setMeasuredDimension(width + 20,  100 );
     }
 
 
@@ -85,9 +85,9 @@ public class NameRow extends View {
         this.parent = popUpList;
     }
 
-    public void setViewWidth(String name){
-        textPaint.getTextBounds(name, 0, name.length(), bounds);
-        this.width = bounds.width();
+    public void setViewWidth(int widthBound){
+        Log.d("dee", "setViewWidth: " +widthBound);
+        this.width = widthBound;
         invalidate();
         requestLayout();
     }

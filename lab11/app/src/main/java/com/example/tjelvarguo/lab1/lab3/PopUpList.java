@@ -2,6 +2,8 @@ package com.example.tjelvarguo.lab1.lab3;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
@@ -19,6 +21,8 @@ public class PopUpList extends LinearLayout {
     private List<String> names = new ArrayList<>();
     private List<NameRow> nameRows = new ArrayList<>();
     private InteractiveSearcher parent;
+    private Paint textPaint;
+    private Rect bounds = new Rect();
 
     public  PopUpList(Context context) {
         super(context);
@@ -34,19 +38,24 @@ public class PopUpList extends LinearLayout {
 
     private void init(){
         this.setOrientation(VERTICAL);
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setTextSize(50);
         fillView();
     }
 
     private void fillView(){
         this.removeAllViews();
         nameRows.clear();
-        int longestNameLength = 0;
-        String longestName = "";
+        int longestWidthBound = 0;
 
         for (int i = 0; i < names.size(); i++) {
-            if (names.get(i).length() > longestNameLength) {
-                longestName = names.get(i);
-                longestNameLength = names.get(i).length();
+            //calculate text paint bounds here for 100% accurate longest width
+            String name = names.get(i);
+            textPaint.getTextBounds(name, 0, name.length(), bounds);
+            int nameWidthBound = bounds.width();
+
+            if (nameWidthBound > longestWidthBound) {
+                longestWidthBound = nameWidthBound;
             }
         }
 
@@ -55,7 +64,7 @@ public class PopUpList extends LinearLayout {
             nameRow.setName(names.get(i));
             nameRow.setParent(this);
             nameRows.add(nameRow);
-            nameRow.setViewWidth(longestName);
+            nameRow.setViewWidth(longestWidthBound);
             this.addView(nameRow);
         }
     }
