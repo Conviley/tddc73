@@ -52,7 +52,7 @@ public class NameRow extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(width + 10,  100 );
+        setMeasuredDimension(width + 40,  100 );
     }
 
 
