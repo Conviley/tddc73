@@ -12,8 +12,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.tjelvarguo.lab1.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,37 +26,47 @@ import java.util.List;
  * Created by Tjelvar Guo on 2018-11-19.
  */
 
-public class PopUpList extends View {
+public class PopUpList extends LinearLayout {
 
-    Paint backgroundPaint;
-    Paint textPaint;
-
-    float textHeight;
-
+    Context ctx;
     List<String> names = new ArrayList<>();
 
     public  PopUpList(Context context) {
         super(context);
-        initPaints();
+        this.ctx = context;
+        init();
     }
 
     public PopUpList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
+        this.ctx = context;
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.PopUpList,
                 0, 0);
-
-        initPaints();
+        init();
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    private void init(){
+        this.setOrientation(VERTICAL);
+
+        fillView();
+    }
+
+    private void fillView(){
+        this.removeAllViews();
+        TextView textView = new TextView(ctx);
+        textView.setText("ASDASDASDASDASW");
+        this.addView(textView);
         for (int i = 0; i < names.size(); i++) {
-            canvas.drawText(names.get(i), 0,100*i + 50, textPaint);
+            NameRow nameRow = new NameRow(ctx);
+            nameRow.setName(names.get(i));
+            this.addView(nameRow);
         }
-        super.onDraw(canvas);
+        TextView textView1 = new TextView(ctx);
+        textView1.setText("ASDASDASDASDASW");
+        this.addView(textView1);
+
     }
 
     @Override
@@ -60,24 +74,9 @@ public class PopUpList extends View {
         setMeasuredDimension(840, names.size() * 100 );
     }
 
-    private void initPaints(){
-        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setTextAlign(Paint.Align.LEFT);
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(50f);
-
-        if (textHeight == 0) {
-            textHeight = textPaint.getTextSize();
-        } else {
-            textPaint.setTextSize(textHeight);
-        }
-
-        backgroundPaint = new Paint(Paint.UNDERLINE_TEXT_FLAG);
-        backgroundPaint.setStyle(Paint.Style.FILL);
-        backgroundPaint.setTextSize(textHeight);
-    }
 
     private void redDraw() {
+        fillView();
         invalidate();
         requestLayout();
     }

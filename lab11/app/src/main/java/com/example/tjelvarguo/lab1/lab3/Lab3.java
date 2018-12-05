@@ -86,7 +86,7 @@ public class Lab3 extends Activity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.toString().equals(" ")){
-                    popUpList.clearNames();
+                    //popUpList.clearNames();
                 }
             }
         });
