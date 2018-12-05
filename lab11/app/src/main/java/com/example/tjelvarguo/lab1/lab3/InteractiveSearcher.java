@@ -40,6 +40,9 @@ public class InteractiveSearcher extends LinearLayout {
     private PopupWindow popupWindow;
     private ScrollView scrollView;
     private int requestId;
+    final ArrayList<String> names = new ArrayList<>();
+    private RequestQueue queue;
+    private boolean markChild = false;
 
     public InteractiveSearcher(Context context) {
         super(context);
@@ -55,9 +58,11 @@ public class InteractiveSearcher extends LinearLayout {
 
     private void init() {
         setOrientation(VERTICAL);
-
+        queue = Volley.newRequestQueue(ctx);
         searchBar = new EditText(ctx);
+
         popUpList = new PopUpList(ctx);
+        popUpList.setParent(this);
 
         scrollView = new ScrollView(ctx);
         scrollView.addView(popUpList);
@@ -77,8 +82,6 @@ public class InteractiveSearcher extends LinearLayout {
     }
 
     private void setUp() {
-        final ArrayList<String> names = new ArrayList<>();
-        final RequestQueue queue = Volley.newRequestQueue(ctx);
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,48 +91,63 @@ public class InteractiveSearcher extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                popUpList.clearNames();
-                requestId++;
-                final String url = "http://andla.pythonanywhere.com/getnames/" + requestId + '/' + charSequence;
                 if (charSequence.length() != 0) {
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        if (response.getInt("id") == requestId) {
-                                            JSONArray results = response.getJSONArray("result");
-                                            for (int i = 0; i < results.length(); i++) {
-                                                names.add(results.get(i).toString());
-                                            }
-                                            popUpList.setNames(names);
-                                            showPopupList();
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("dee: ", error.toString());
-                                }
-                            });
-
-                    queue.add(jsonObjectRequest);
+                    getMatchingNames(charSequence.toString(), markChild);
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.toString().equals(" ")){
-                    //popUpList.clearNames();
-                }
-            }
+            public void afterTextChanged(Editable editable) {}
         });
+    }
+
+    public void getMatchingNames(String name, final boolean markChild){
+        popUpList.clearNames();
+        requestId++;
+
+        final String url = "http://andla.pythonanywhere.com/getnames/" + requestId + '/' + name;
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.getInt("id") == requestId) {
+                                    JSONArray results = response.getJSONArray("result");
+                                    for (int i = 0; i < results.length(); i++) {
+                                        names.add(results.get(i).toString());
+                                    }
+                                    popUpList.setNames(names);
 
 
+                                    popUpList.markChild(markChild);
+
+
+                                    showPopupList();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("dee: ", error.toString());
+                        }
+                    });
+
+            queue.add(jsonObjectRequest);
+    }
+
+    public void fillSearchBar(String name){
+        markChild = true;
+        searchBar.setText(name);
+        searchBar.setSelection(name.length());
+    }
+
+    public void setMarkChild() {
+        markChild = false;
     }
 }

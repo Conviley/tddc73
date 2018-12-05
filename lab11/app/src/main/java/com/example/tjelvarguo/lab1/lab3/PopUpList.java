@@ -28,9 +28,11 @@ import java.util.List;
 
 public class PopUpList extends LinearLayout {
 
-    Context ctx;
-    List<String> names = new ArrayList<>();
-    List<NameRow> nameRows = new ArrayList<>();
+    private Context ctx;
+    private List<String> names = new ArrayList<>();
+    private List<NameRow> nameRows = new ArrayList<>();
+    private InteractiveSearcher parent;
+
 
     public  PopUpList(Context context) {
         super(context);
@@ -60,7 +62,6 @@ public class PopUpList extends LinearLayout {
             nameRows.add(nameRow);
             this.addView(nameRow);
         }
-
     }
 
     private void redDraw() {
@@ -79,7 +80,18 @@ public class PopUpList extends LinearLayout {
         redDraw();
     }
 
-    public void selectChild(String name){
+    public void setParent(InteractiveSearcher interactiveSearcher) {
+        this.parent = interactiveSearcher;
+    }
 
+    public void selectChild(String name){
+        parent.fillSearchBar(name);
+    }
+
+    public void markChild(boolean markChild){
+        if (markChild) {
+            nameRows.get(0).setBackgroundColor(Color.GRAY);
+            parent.setMarkChild();
+        }
     }
 }
