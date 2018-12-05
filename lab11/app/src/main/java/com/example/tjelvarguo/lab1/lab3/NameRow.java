@@ -17,25 +17,26 @@ public class NameRow extends View {
     private Paint textPaint;
     private Paint linePaint;
     private String name;
+    private PopUpList parent;
 
     public NameRow(Context context) {
         super(context);
-        initPaints();
+        init();
     }
 
     public NameRow(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPaints();
+        init();
     }
 
     public NameRow(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initPaints();
+        init();
     }
 
     public NameRow(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initPaints();
+        init();
     }
 
     @Override
@@ -51,7 +52,15 @@ public class NameRow extends View {
     }
 
 
-    private void initPaints(){
+    private void init(){
+
+        this.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parent.selectChild(name);
+            }
+        });
+
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setColor(Color.BLACK);
@@ -63,10 +72,22 @@ public class NameRow extends View {
 
     }
 
+    public void setSelected(){
+        setBackgroundColor(Color.GRAY);
+    }
+
+    public void unselect(){
+        setBackgroundColor(Color.WHITE);
+    }
+
     public void setName(String name) {
         this.name = name;
         invalidate();
         requestLayout();
+    }
+
+    public void setParent(PopUpList popUpList) {
+        this.parent = popUpList;
     }
 
 }

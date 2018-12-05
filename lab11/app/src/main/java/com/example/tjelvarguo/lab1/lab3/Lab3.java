@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -40,6 +41,8 @@ public class Lab3 extends Activity {
         final ArrayList<String> names = new ArrayList<>();
 
         final RequestQueue queue = Volley.newRequestQueue(this);
+
+
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override

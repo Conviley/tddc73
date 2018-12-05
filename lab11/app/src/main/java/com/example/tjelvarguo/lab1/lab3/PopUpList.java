@@ -30,6 +30,7 @@ public class PopUpList extends LinearLayout {
 
     Context ctx;
     List<String> names = new ArrayList<>();
+    List<NameRow> nameRows = new ArrayList<>();
 
     public  PopUpList(Context context) {
         super(context);
@@ -55,22 +56,16 @@ public class PopUpList extends LinearLayout {
 
     private void fillView(){
         this.removeAllViews();
-
+        nameRows.clear();
         for (int i = 0; i < names.size(); i++) {
             NameRow nameRow = new NameRow(ctx);
             nameRow.setName(names.get(i));
+            nameRow.setParent(this);
+            nameRows.add(nameRow);
             this.addView(nameRow);
-            Log.d("dee", names.get(i));
         }
 
-
     }
-
-/*    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(840, names.size() * 100 );
-    }*/
-
 
     private void redDraw() {
         fillView();
@@ -86,5 +81,9 @@ public class PopUpList extends LinearLayout {
     public void clearNames() {
         this.names.clear();
         redDraw();
+    }
+
+    public void selectChild(String name){
+
     }
 }
