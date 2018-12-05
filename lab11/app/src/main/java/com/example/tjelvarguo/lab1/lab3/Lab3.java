@@ -61,7 +61,6 @@ public class Lab3 extends Activity {
                                     try {
                                         if (response.getInt("id") == requestId) {
                                             JSONArray results = response.getJSONArray("result");
-
                                             for (int i = 0; i < results.length(); i++) {
                                                 names.add(results.get(i).toString());
                                             }

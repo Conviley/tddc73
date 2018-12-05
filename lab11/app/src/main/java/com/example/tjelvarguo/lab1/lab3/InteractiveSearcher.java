@@ -38,15 +38,19 @@ public class InteractiveSearcher extends LinearLayout {
 
     private void init() {
         setOrientation(VERTICAL);
+
         searchBar = new EditText(ctx);
         popUpList = new PopUpList(ctx);
+
         scrollView = new ScrollView(ctx);
+        scrollView.addView(popUpList);
+
         popupWindow = new PopupWindow(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
-        popupWindow.setContentView(popUpList);
-        //popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popupWindow.setContentView(scrollView);
+        popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+
         this.addView(searchBar);
-        //this.addView(popUpList);
     }
 
     public PopUpList getPopUpList() {

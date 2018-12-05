@@ -55,6 +55,11 @@ public class PopUpList extends View {
         super.onDraw(canvas);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(840, names.size() * 100 );
+    }
+
     private void initPaints(){
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextAlign(Paint.Align.LEFT);
