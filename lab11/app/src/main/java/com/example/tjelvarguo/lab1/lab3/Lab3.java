@@ -28,7 +28,7 @@ public class Lab3 extends Activity {
     private PopUpList popUpList;
     private EditText searchBar;
     private InteractiveSearcher interactiveSearcher;
-
+    private int requestId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,35 +49,38 @@ public class Lab3 extends Activity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                 popUpList.clearNames();
+                requestId++;
+                final String url = "http://andla.pythonanywhere.com/getnames/" + requestId + '/' + charSequence;
+                if (charSequence.length() != 0) {
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-                final String url = "http://andla.pythonanywhere.com/getnames/3/" + charSequence;
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        if (response.getInt("id") == requestId) {
+                                            JSONArray results = response.getJSONArray("result");
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    JSONArray results = response.getJSONArray("result");
-                                    for (int i = 0; i < results.length(); i++) {
-                                        names.add(results.get(i).toString());
+                                            for (int i = 0; i < results.length(); i++) {
+                                                names.add(results.get(i).toString());
+                                            }
+                                            popUpList.setNames(names);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    popUpList.setNames(names);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        }, new Response.ErrorListener() {
+                            }, new Response.ErrorListener() {
 
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("dee: ", error.toString());
-                            }
-                        });
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("dee: ", error.toString());
+                                }
+                            });
 
-                queue.add(jsonObjectRequest);
+                    queue.add(jsonObjectRequest);
+                }
             }
 
             @Override
@@ -87,6 +90,5 @@ public class Lab3 extends Activity {
                 }
             }
         });
-
     }
 }

@@ -73,7 +73,6 @@ public class Lab12Java extends Activity {
         if (hasEditText) {
             EditText editText = new EditText(this);
             if (inputType != null) {
-                Log.d("deee: ", "inputtype: " + inputType);
                 editText.setInputType(inputType);
             }
             layout.addView(editText,contentParam);
