@@ -1,19 +1,10 @@
 package com.example.tjelvarguo.lab1.lab3;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-
-import com.example.tjelvarguo.lab1.R;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,73 +13,81 @@ import java.util.List;
  * Created by Tjelvar Guo on 2018-11-19.
  */
 
-public class PopUpList extends View {
+public class PopUpList extends LinearLayout {
 
-    Paint backgroundPaint;
-    Paint textPaint;
-
-    float textHeight;
-
-    List<String> names = new ArrayList<>();
+    private Context ctx;
+    private List<String> names = new ArrayList<>();
+    private List<NameRow> nameRows = new ArrayList<>();
+    private InteractiveSearcher parent;
 
     public  PopUpList(Context context) {
         super(context);
-        initPaints();
+        this.ctx = context;
+        init();
     }
 
     public PopUpList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.PopUpList,
-                0, 0);
-
-        initPaints();
+        this.ctx = context;
+        init();
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    private void init(){
+        this.setOrientation(VERTICAL);
+        fillView();
+    }
+
+    private void fillView(){
+        this.removeAllViews();
+        nameRows.clear();
+        int longestNameLength = 0;
+        String longestName = "";
+
         for (int i = 0; i < names.size(); i++) {
-            canvas.drawText(names.get(i), 0,100*i + 50, textPaint);
-        }
-        super.onDraw(canvas);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(840, names.size() * 100 );
-    }
-
-    private void initPaints(){
-        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setTextAlign(Paint.Align.LEFT);
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(50f);
-
-        if (textHeight == 0) {
-            textHeight = textPaint.getTextSize();
-        } else {
-            textPaint.setTextSize(textHeight);
+            if (names.get(i).length() > longestNameLength) {
+                longestName = names.get(i);
+                longestNameLength = names.get(i).length();
+            }
         }
 
-        backgroundPaint = new Paint(Paint.UNDERLINE_TEXT_FLAG);
-        backgroundPaint.setStyle(Paint.Style.FILL);
-        backgroundPaint.setTextSize(textHeight);
+        for (int i = 0; i < names.size(); i++) {
+            NameRow nameRow = new NameRow(ctx);
+            nameRow.setName(names.get(i));
+            nameRow.setParent(this);
+            nameRows.add(nameRow);
+            nameRow.setViewWidth(longestName);
+            this.addView(nameRow);
+        }
     }
 
-    private void redDraw() {
+    private void reDraw() {
+        fillView();
         invalidate();
         requestLayout();
     }
 
     public void setNames(List<String> names){
         this.names = names;
-        redDraw();
+        reDraw();
     }
 
     public void clearNames() {
         this.names.clear();
-        redDraw();
+        reDraw();
+    }
+
+    public void setParent(InteractiveSearcher interactiveSearcher) {
+        this.parent = interactiveSearcher;
+    }
+
+    public void selectChild(String name){
+        parent.fillSearchBar(name);
+    }
+
+    public void markChild(boolean markChild){
+        if (markChild) {
+            nameRows.get(0).setBackgroundColor(Color.GRAY);
+            parent.setMarkChild();
+        }
     }
 }
