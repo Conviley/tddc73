@@ -21,7 +21,6 @@ public class NameRow extends View {
     private String name;
     private PopUpList parent;
     private int width;
-    private Rect bounds = new Rect();
 
     public NameRow(Context context) {
         super(context);
@@ -86,7 +85,6 @@ public class NameRow extends View {
     }
 
     public void setViewWidth(int widthBound){
-        Log.d("dee", "setViewWidth: " +widthBound);
         this.width = widthBound;
         invalidate();
         requestLayout();
