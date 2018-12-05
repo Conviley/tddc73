@@ -41,10 +41,6 @@ public class PopUpList extends LinearLayout {
     public PopUpList(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.ctx = context;
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.PopUpList,
-                0, 0);
         init();
     }
 

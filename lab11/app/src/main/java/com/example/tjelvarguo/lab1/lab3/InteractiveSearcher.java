@@ -4,13 +4,29 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Tjelvar Guo on 2018-11-19.
@@ -23,6 +39,7 @@ public class InteractiveSearcher extends LinearLayout {
     private PopUpList popUpList;
     private PopupWindow popupWindow;
     private ScrollView scrollView;
+    private int requestId;
 
     public InteractiveSearcher(Context context) {
         super(context);
@@ -51,17 +68,68 @@ public class InteractiveSearcher extends LinearLayout {
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         this.addView(searchBar);
-    }
 
-    public PopUpList getPopUpList() {
-        return this.popUpList;
-    }
-
-    public EditText getSearchBar() {
-        return this.searchBar;
+        setUp();
     }
 
     public void showPopupList(){
         popupWindow.showAsDropDown(searchBar);
+    }
+
+    private void setUp() {
+        final ArrayList<String> names = new ArrayList<>();
+        final RequestQueue queue = Volley.newRequestQueue(ctx);
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                popUpList.clearNames();
+                requestId++;
+                final String url = "http://andla.pythonanywhere.com/getnames/" + requestId + '/' + charSequence;
+                if (charSequence.length() != 0) {
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        if (response.getInt("id") == requestId) {
+                                            JSONArray results = response.getJSONArray("result");
+                                            for (int i = 0; i < results.length(); i++) {
+                                                names.add(results.get(i).toString());
+                                            }
+                                            popUpList.setNames(names);
+                                            showPopupList();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("dee: ", error.toString());
+                                }
+                            });
+
+                    queue.add(jsonObjectRequest);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().equals(" ")){
+                    //popUpList.clearNames();
+                }
+            }
+        });
+
+
     }
 }
