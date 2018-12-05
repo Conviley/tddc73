@@ -1,23 +1,10 @@
 package com.example.tjelvarguo.lab1.lab3;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.example.tjelvarguo.lab1.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,16 +42,28 @@ public class PopUpList extends LinearLayout {
     private void fillView(){
         this.removeAllViews();
         nameRows.clear();
+        int longestNameLength = 0;
+        String longestName = "";
+
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).length() > longestNameLength) {
+                longestName = names.get(i);
+                longestNameLength = names.get(i).length();
+            }
+        }
         for (int i = 0; i < names.size(); i++) {
             NameRow nameRow = new NameRow(ctx);
             nameRow.setName(names.get(i));
             nameRow.setParent(this);
             nameRows.add(nameRow);
+            nameRow.setViewWidth(longestName);
             this.addView(nameRow);
         }
+
+
     }
 
-    private void redDraw() {
+    private void reDraw() {
         fillView();
         invalidate();
         requestLayout();
@@ -72,12 +71,12 @@ public class PopUpList extends LinearLayout {
 
     public void setNames(List<String> names){
         this.names = names;
-        redDraw();
+        reDraw();
     }
 
     public void clearNames() {
         this.names.clear();
-        redDraw();
+        reDraw();
     }
 
     public void setParent(InteractiveSearcher interactiveSearcher) {

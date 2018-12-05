@@ -91,13 +91,11 @@ public class InteractiveSearcher extends LinearLayout {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() != 0) {
-                    getMatchingNames(charSequence.toString(), markChild);
-                }
+                getMatchingNames(charSequence.toString(), markChild);
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {}
+            public void afterTextChanged(Editable editable) { }
         });
     }
 

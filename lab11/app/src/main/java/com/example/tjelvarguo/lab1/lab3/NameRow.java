@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -18,6 +20,8 @@ public class NameRow extends View {
     private Paint linePaint;
     private String name;
     private PopUpList parent;
+    private int width;
+    private Rect bounds = new Rect();
 
     public NameRow(Context context) {
         super(context);
@@ -41,19 +45,20 @@ public class NameRow extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         canvas.drawText(name, 0,  70, textPaint);
+
         canvas.drawLine(0,100,840,100,linePaint);
         super.onDraw(canvas);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(840,  100 );
+        setMeasuredDimension(width + 10,  100 );
     }
 
 
     private void init(){
-
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,14 +77,6 @@ public class NameRow extends View {
 
     }
 
-    public void setSelected(){
-        setBackgroundColor(Color.GRAY);
-    }
-
-    public void unselect(){
-        setBackgroundColor(Color.WHITE);
-    }
-
     public void setName(String name) {
         this.name = name;
         invalidate();
@@ -88,6 +85,13 @@ public class NameRow extends View {
 
     public void setParent(PopUpList popUpList) {
         this.parent = popUpList;
+    }
+
+    public void setViewWidth(String name){
+        textPaint.getTextBounds(name, 0, name.length(), bounds);
+        this.width = bounds.width();
+        invalidate();
+        requestLayout();
     }
 
 }
