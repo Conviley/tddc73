@@ -66,6 +66,7 @@ public class Lab3 extends Activity {
                                                 names.add(results.get(i).toString());
                                             }
                                             popUpList.setNames(names);
+                                            interactiveSearcher.showPopupList();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
