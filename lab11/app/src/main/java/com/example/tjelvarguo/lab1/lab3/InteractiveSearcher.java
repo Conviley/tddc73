@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -38,7 +37,6 @@ public class InteractiveSearcher extends LinearLayout {
     private EditText searchBar;
     private PopUpList popUpList;
     private PopupWindow popupWindow;
-    private ScrollView scrollView;
     private int requestId;
     final ArrayList<String> names = new ArrayList<>();
     private RequestQueue queue;
@@ -64,30 +62,26 @@ public class InteractiveSearcher extends LinearLayout {
         popUpList = new PopUpList(ctx);
         popUpList.setParent(this);
 
-        scrollView = new ScrollView(ctx);
+        ScrollView scrollView = new ScrollView(ctx);
         scrollView.addView(popUpList);
 
-        popupWindow = new PopupWindow(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupWindow.setContentView(scrollView);
         popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         this.addView(searchBar);
 
-        setUp();
+        textWatcher();
     }
 
-    public void showPopupList(){
-        popupWindow.showAsDropDown(searchBar);
-    }
+    public void showPopupList(){ popupWindow.showAsDropDown(searchBar); }
 
-    private void setUp() {
-
+    private void textWatcher() {
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -95,7 +89,7 @@ public class InteractiveSearcher extends LinearLayout {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
+            public void afterTextChanged(Editable editable) {}
         });
     }
 
@@ -117,9 +111,7 @@ public class InteractiveSearcher extends LinearLayout {
                                         names.add(results.get(i).toString());
                                     }
                                     popUpList.setNames(names);
-
                                     popUpList.markChild(markChild);
-
                                     showPopupList();
                                 }
                             } catch (JSONException e) {
@@ -133,7 +125,6 @@ public class InteractiveSearcher extends LinearLayout {
                             Log.d("dee: ", error.toString());
                         }
                     });
-
             queue.add(jsonObjectRequest);
     }
 

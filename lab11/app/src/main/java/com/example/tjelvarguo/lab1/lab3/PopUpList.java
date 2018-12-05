@@ -20,7 +20,6 @@ public class PopUpList extends LinearLayout {
     private List<NameRow> nameRows = new ArrayList<>();
     private InteractiveSearcher parent;
 
-
     public  PopUpList(Context context) {
         super(context);
         this.ctx = context;
@@ -35,7 +34,6 @@ public class PopUpList extends LinearLayout {
 
     private void init(){
         this.setOrientation(VERTICAL);
-
         fillView();
     }
 
@@ -51,6 +49,7 @@ public class PopUpList extends LinearLayout {
                 longestNameLength = names.get(i).length();
             }
         }
+
         for (int i = 0; i < names.size(); i++) {
             NameRow nameRow = new NameRow(ctx);
             nameRow.setName(names.get(i));
@@ -59,8 +58,6 @@ public class PopUpList extends LinearLayout {
             nameRow.setViewWidth(longestName);
             this.addView(nameRow);
         }
-
-
     }
 
     private void reDraw() {

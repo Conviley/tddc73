@@ -45,9 +45,7 @@ public class NameRow extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         canvas.drawText(name, 0,  70, textPaint);
-
         canvas.drawLine(0,100,840,100,linePaint);
         super.onDraw(canvas);
     }
