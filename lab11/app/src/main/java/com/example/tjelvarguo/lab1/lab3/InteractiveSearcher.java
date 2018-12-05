@@ -118,9 +118,7 @@ public class InteractiveSearcher extends LinearLayout {
                                     }
                                     popUpList.setNames(names);
 
-
                                     popUpList.markChild(markChild);
-
 
                                     showPopupList();
                                 }
